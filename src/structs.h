@@ -36,6 +36,7 @@ struct Animation
     Timer               timer;
     int                 frame_count;
     Animation_Type      anim_type;
+    bool                one_shot_cycle;
 };
 
 typedef struct Tile
@@ -51,7 +52,7 @@ typedef struct Tile
 struct Player_Data
 {
     Player_State        state;
-    int                 weapon_timer;
+    int                 attack_timer;
     int                 jump_reload;
     bool                is_attacking;
 };
