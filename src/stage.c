@@ -51,15 +51,20 @@ void update_fighters_animations()
             if (current_frame(&e->animation, &e->animation.timer) == e->animation.frame_count - 1)
             {
                 e->src_rect.x = current_frame(&e->animation, &e->animation.timer) * CELL_SIZE * FIGHTER_SCALE;
-                step_animation(&e->animation.timer, app.delta_time);
-                if (current_frame(&e->animation, &e->animation.timer) == 0)
+                if (e->data.player.state == ATTACK)
                 {
-                    e->animation.one_shot_cycle = true;
+                    step_animation(&e->animation.timer, app.delta_time);
+                    if (current_frame(&e->animation, &e->animation.timer) == 0)
+                    {
+                        e->animation.one_shot_cycle = true;
+                        printf("%d\n", e->animation.one_shot_cycle);
+                    }
                 }
             } else
             {
                 step_animation(&e->animation.timer, app.delta_time);
                 e->src_rect.x = current_frame(&e->animation, &e->animation.timer) * CELL_SIZE * FIGHTER_SCALE;
+                    printf("%d\n", e->animation.one_shot_cycle);
             }
         } else
         {

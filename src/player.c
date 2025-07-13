@@ -209,6 +209,7 @@ void do_player_logic(void)
     {
         player->data.player.is_attacking = false;
         player->data.player.attack_timer = 1;
+        player->animation.one_shot_cycle = false;
     }
     player_movement();
 }
