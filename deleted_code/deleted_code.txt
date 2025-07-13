@@ -1,0 +1,20 @@
+void update_fighters_animations()
+{
+    // animation logic
+    //for (e = stage.fighter_head.next; e != NULL; e = e->next)
+    //{
+    //    e->timer.frame_count = e->animation.last_frame;
+    //    e->timer.frames_counter++;
+    //    if (e->timer.frames_counter >= (60 / e->timer.frames_speed))
+    //    {
+    //        e->timer.frames_counter = 0;
+    //        e->timer.current_frame++;
+    //        if (e->timer.current_frame >= e->timer.frame_count)
+    //        {
+    //            e->timer.current_frame = 0;
+    //        }
+
+    //        e->src_rect.x = (float)e->timer.current_frame * CELL_SIZE * FIGHTER_SCALE;
+    //    }
+    //}
+}

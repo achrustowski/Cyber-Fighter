@@ -1,0 +1,6 @@
+-I/Users/work/microui/src
+-I/opt/homebrew/Cellar/raylib/5.5/include
+-I/opt/homebrew/Cellar/sdl3/3.2.8/include
+-I/opt/homebrew/Cellar/sdl3_image/3.2.4/include
+-I/opt/homebrew/Cellar/sdl3_ttf/3.2.2/include
+-I/opt/homebrew/Cellar/cglm/0.9.6/include
