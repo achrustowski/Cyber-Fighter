@@ -3,6 +3,7 @@
 #include "structs.h"
 #include "player.h"
 #include "draw.h"
+#include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 #include "enums.h"
@@ -41,12 +42,13 @@ static Texture2D attack_three_texture;
 
 static void init_player_textures(void);
 static void init_player_animations(void);
-static void player_movement(void);
+static void do_player_movement(void);
 static void player_idle(void);
 static void player_run(void);
 static void player_jump(void);
 static void player_double_jump(void);
 static void player_attack(void);
+static void do_player_key_input(void);
 
 void init_player(void)
 {
@@ -76,7 +78,7 @@ void init_player(void)
     player->timer.timeout = false;
 }
 
-static void player_movement()
+static void do_player_movement()
 {
     if (player->is_moving)
     {
@@ -97,6 +99,8 @@ static void player_movement()
 
 void do_player_logic(void)
 {
+    do_player_key_input();
+
     switch (player->data.player.state)
     {
         case IDLE:
@@ -144,7 +148,7 @@ void do_player_logic(void)
                 player->data.player.state = RUN;
                 player_run();
             }
-            if (!player->grounded && IsKeyPressed(KEY_SPACE))
+            if (!player->grounded && IsKeyPressed(KEY_W))
             {
                 player->data.player.state = D_JUMP;
                 player_double_jump();
@@ -161,11 +165,6 @@ void do_player_logic(void)
                 player->data.player.state = RUN;
                 player_run();
             }
-            if (player->data.player.is_attacking)
-            {
-                player->data.player.state = ATTACK;
-                player_attack();
-            }
             break;
         case ATTACK:
             if (!player->data.player.is_attacking && player->grounded)
@@ -173,35 +172,60 @@ void do_player_logic(void)
                 player->data.player.state = IDLE;
                 player_idle();
             }
-            if (player->data.player.is_attacking && !player->grounded)
+            if (!player->grounded)
             {
                 player->data.player.state = JUMP;
                 player_jump();
             }
             break;
     }
-    if (IsKeyDown(KEY_RIGHT))
+
+    do_player_movement();
+}
+
+static void do_player_key_input()
+{
+    if (IsKeyDown(KEY_D))
     {
         player->is_moving = true;
         player->dir = RIGHT;
     }
-    if (IsKeyDown(KEY_LEFT))
+    if (IsKeyDown(KEY_A))
     {
         player->is_moving = true;
         player->dir = LEFT;
     }
-    if (IsKeyPressed(KEY_SPACE) && player->data.player.jump_reload >= 0)
+    if (IsKeyPressed(KEY_W) && player->data.player.jump_reload >= 0)
     {
         --player->data.player.jump_reload;
         player->grounded = false;
         player->speed = -player->velocity.y;
     }
-    if (IsKeyPressed(KEY_A) && player->data.player.attack_timer > 0)
+    if (IsKeyPressed(KEY_J) && player->data.player.attack_timer > 0)
     {
+        player->data.player.attack_type = SIMPLE;
         player->data.player.is_attacking = true;
-        player->data.player.attack_timer = 0;
+        --player->data.player.attack_timer;
     }
-    if (IsKeyReleased(KEY_RIGHT) || IsKeyReleased(KEY_LEFT))
+    if (IsKeyPressed(KEY_I) && player->data.player.attack_timer > 0)
+    {
+        player->data.player.attack_type = COMBO;
+        player->data.player.is_attacking = true;
+        --player->data.player.attack_timer;
+    }
+    if (IsKeyPressed(KEY_O) && player->data.player.attack_timer > 0)
+    {
+        player->data.player.attack_type = ULTRA;
+        player->data.player.is_attacking = true;
+        --player->data.player.attack_timer;
+    }
+    if (IsKeyPressed(KEY_K) && player->data.player.attack_timer > 0)
+    {
+        player->data.player.attack_type = KICK;
+        player->data.player.is_attacking = true;
+        --player->data.player.attack_timer;
+    }
+    if (IsKeyReleased(KEY_D) || IsKeyReleased(KEY_A))
     {
         player->is_moving = false;
     }
@@ -211,7 +235,6 @@ void do_player_logic(void)
         player->data.player.attack_timer = 1;
         player->animation.one_shot_cycle = false;
     }
-    player_movement();
 }
 
 static void player_idle()
@@ -241,8 +264,25 @@ static void player_double_jump()
 
 static void player_attack()
 {
-    player->texture = attack_one_texture;
-    player->animation = attack_one_animation;
+    switch (player->data.player.attack_type)
+    {
+        case SIMPLE:
+            player->texture = attack_one_texture;
+            player->animation = attack_one_animation;
+            break;
+        case COMBO:
+            player->texture = attack_two_texture;
+            player->animation = attack_two_animation;
+            break;
+        case ULTRA:
+            player->texture = attack_three_texture;
+            player->animation = attack_three_animation;
+            break;
+        case KICK:
+            player->texture = punch_texture;
+            player->animation = punch_animation;
+            break;
+    }
 }
 
 void init_player_resources(void)
@@ -282,17 +322,19 @@ static void init_player_animations(void)
     run_attack_animation.anim_type = REPEATING;
 
     attack_one_animation.frame_count = 6;
-    attack_one_animation.timer.length = 0.9f;
+    attack_one_animation.timer.length = 0.7f;
     attack_one_animation.anim_type = ONE_SHOT;
     attack_one_animation.one_shot_cycle = false;
 
     attack_two_animation.frame_count = 8;
-    attack_two_animation.timer.length = 0.6f;
+    attack_two_animation.timer.length = 0.7f;
     attack_two_animation.anim_type = ONE_SHOT;
+    attack_two_animation.one_shot_cycle = false;
 
     attack_three_animation.frame_count = 8;
-    attack_three_animation.timer.length = 0.6f;
+    attack_three_animation.timer.length = 0.7f;
     attack_three_animation.anim_type = ONE_SHOT;
+    attack_three_animation.one_shot_cycle = false;
 
     climb_animation.frame_count = 8;
     climb_animation.timer.length = 0.6f;
@@ -300,11 +342,13 @@ static void init_player_animations(void)
 
     death_animation.frame_count = 6;
     death_animation.timer.length = 0.6f;
-    death_animation.anim_type = REPEATING;
+    death_animation.anim_type = ONE_SHOT;
+    death_animation.one_shot_cycle = false;
 
     double_jump_animation.frame_count = 6;
     double_jump_animation.timer.length = 1.0f;
     double_jump_animation.anim_type = ONE_SHOT;
+    double_jump_animation.one_shot_cycle = false;
 
     hurt_animation.frame_count = 2;
     hurt_animation.timer.length = 0.6f;
@@ -313,10 +357,12 @@ static void init_player_animations(void)
     jump_animation.frame_count = 4;
     jump_animation.timer.length = 1.01f;
     jump_animation.anim_type = ONE_SHOT;
+    jump_animation.one_shot_cycle = false;
 
     punch_animation.frame_count = 6;
     punch_animation.timer.length = 0.6f;
-    punch_animation.anim_type = REPEATING;
+    punch_animation.anim_type = ONE_SHOT;
+    punch_animation.one_shot_cycle = false;
 }
 
 void remove_player_textures(void)

@@ -57,14 +57,12 @@ void update_fighters_animations()
                     if (current_frame(&e->animation, &e->animation.timer) == 0)
                     {
                         e->animation.one_shot_cycle = true;
-                        printf("%d\n", e->animation.one_shot_cycle);
                     }
                 }
             } else
             {
                 step_animation(&e->animation.timer, app.delta_time);
                 e->src_rect.x = current_frame(&e->animation, &e->animation.timer) * CELL_SIZE * FIGHTER_SCALE;
-                    printf("%d\n", e->animation.one_shot_cycle);
             }
         } else
         {

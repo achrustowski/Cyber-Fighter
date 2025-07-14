@@ -39,22 +39,13 @@ struct Animation
     bool                one_shot_cycle;
 };
 
-typedef struct Tile
-{
-    Group               group;
-    Vector2             position;
-    Rectangle           collision_box;
-    bool                is_active;
-    Rectangle           src_rect;
-    Texture2D           texture;
-} Tile;
-
 struct Player_Data
 {
     Player_State        state;
     int                 attack_timer;
     int                 jump_reload;
     bool                is_attacking;
+    Player_Attack_Type  attack_type;
 };
 
 struct Enemy_Data

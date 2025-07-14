@@ -13,14 +13,13 @@ typedef enum Animation_Type
     ONE_SHOT = 2
 } Animation_Type;
 
-typedef enum Group
+typedef enum Player_Attack_Type
 {
-    SIDE_WALL,
-    BG_WALL,
-    CEILING,
-    FLOOR,
-    GRASS
-} Group;
+    SIMPLE,
+    COMBO,
+    ULTRA,
+    KICK
+} Player_Attack_Type;
 
 typedef enum Player_State
 {
