@@ -1,11 +1,13 @@
 #include <SDL3/SDL.h>
 #include <raylib.h>
 #include "camera.h"
+#include "defs.h"
 #include "gui_mode.h"
 #include "stage.h"
 #include "structs.h"
 #include "init.h"
 #include "background.h"
+#include "tiles.h"
 #include <stdlib.h>
 
 App app;
@@ -17,6 +19,8 @@ int main()
     memset(&app, 0, sizeof(App));
     app.S_W = 1024;
     app.S_H = 768;
+    app.G_W = app.S_W / CELL_SIZE;
+    app.G_H = app.S_H / CELL_SIZE;
 
     InitWindow(app.S_W, app.S_H, "2D platformer");
     init_game();
@@ -26,6 +30,7 @@ int main()
     while (!WindowShouldClose())
     {
         app.delta_time = GetFrameTime();
+        do_tilemap_logic();
         do_stage_logic();
         do_camera_logic();
         if (IsKeyPressed(KEY_F1))
@@ -44,6 +49,7 @@ int main()
         init_gui_mode();
         BeginMode2D(app.camera);
         draw_background();
+        draw_tilemap();
         stage_draw();
         EndMode2D();
         EndDrawing();

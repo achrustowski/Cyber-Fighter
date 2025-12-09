@@ -95,6 +95,7 @@ static void do_player_movement()
             player->data.player.jump_reload = 2;
         }
     }
+    app.player_x = player->position.x;
 }
 
 void do_player_logic(void)
@@ -309,60 +310,60 @@ static void init_player_textures()
 
 static void init_player_animations(void)
 {
-    idle_animation.frame_count = 4;
-    idle_animation.timer.length = 0.9f;
-    idle_animation.anim_type = REPEATING;
+    idle_animation.frame_count              = 4;
+    idle_animation.timer.length             = 0.9f;
+    idle_animation.anim_type                = REPEATING;
 
-    run_animation.frame_count = 4;
-    run_animation.timer.length = 0.6f;
-    run_animation.anim_type = REPEATING;
+    run_animation.frame_count               = 4;
+    run_animation.timer.length              = 0.6f;
+    run_animation.anim_type                 = REPEATING;
 
-    run_attack_animation.frame_count = 6;
-    run_attack_animation.timer.length = 0.6f;
-    run_attack_animation.anim_type = REPEATING;
+    run_attack_animation.frame_count        = 6;
+    run_attack_animation.timer.length       = 0.6f;
+    run_attack_animation.anim_type          = REPEATING;
 
-    attack_one_animation.frame_count = 6;
-    attack_one_animation.timer.length = 0.7f;
-    attack_one_animation.anim_type = ONE_SHOT;
-    attack_one_animation.one_shot_cycle = false;
+    attack_one_animation.frame_count        = 6;
+    attack_one_animation.timer.length       = 0.7f;
+    attack_one_animation.anim_type          = ONE_SHOT;
+    attack_one_animation.one_shot_cycle     = false;
 
-    attack_two_animation.frame_count = 8;
-    attack_two_animation.timer.length = 0.7f;
-    attack_two_animation.anim_type = ONE_SHOT;
-    attack_two_animation.one_shot_cycle = false;
+    attack_two_animation.frame_count        = 8;
+    attack_two_animation.timer.length       = 0.7f;
+    attack_two_animation.anim_type          = ONE_SHOT;
+    attack_two_animation.one_shot_cycle     = false;
 
-    attack_three_animation.frame_count = 8;
-    attack_three_animation.timer.length = 0.7f;
-    attack_three_animation.anim_type = ONE_SHOT;
-    attack_three_animation.one_shot_cycle = false;
+    attack_three_animation.frame_count      = 8;
+    attack_three_animation.timer.length     = 0.7f;
+    attack_three_animation.anim_type        = ONE_SHOT;
+    attack_three_animation.one_shot_cycle   = false;
 
-    climb_animation.frame_count = 8;
-    climb_animation.timer.length = 0.6f;
-    climb_animation.anim_type = REPEATING;
+    climb_animation.frame_count             = 8;
+    climb_animation.timer.length            = 0.6f;
+    climb_animation.anim_type               = REPEATING;
 
-    death_animation.frame_count = 6;
-    death_animation.timer.length = 0.6f;
-    death_animation.anim_type = ONE_SHOT;
-    death_animation.one_shot_cycle = false;
+    death_animation.frame_count             = 6;
+    death_animation.timer.length            = 0.6f;
+    death_animation.anim_type               = ONE_SHOT;
+    death_animation.one_shot_cycle          = false;
 
-    double_jump_animation.frame_count = 6;
-    double_jump_animation.timer.length = 1.0f;
-    double_jump_animation.anim_type = ONE_SHOT;
-    double_jump_animation.one_shot_cycle = false;
+    double_jump_animation.frame_count       = 6;
+    double_jump_animation.timer.length      = 1.0f;
+    double_jump_animation.anim_type         = ONE_SHOT;
+    double_jump_animation.one_shot_cycle    = false;
 
-    hurt_animation.frame_count = 2;
-    hurt_animation.timer.length = 0.6f;
-    hurt_animation.anim_type = REPEATING;
+    hurt_animation.frame_count              = 2;
+    hurt_animation.timer.length             = 0.6f;
+    hurt_animation.anim_type                = REPEATING;
 
-    jump_animation.frame_count = 4;
-    jump_animation.timer.length = 1.01f;
-    jump_animation.anim_type = ONE_SHOT;
-    jump_animation.one_shot_cycle = false;
+    jump_animation.frame_count              = 4;
+    jump_animation.timer.length             = 1.01f;
+    jump_animation.anim_type                = ONE_SHOT;
+    jump_animation.one_shot_cycle           = false;
 
-    punch_animation.frame_count = 6;
-    punch_animation.timer.length = 0.6f;
-    punch_animation.anim_type = ONE_SHOT;
-    punch_animation.one_shot_cycle = false;
+    punch_animation.frame_count             = 6;
+    punch_animation.timer.length            = 0.6f;
+    punch_animation.anim_type               = ONE_SHOT;
+    punch_animation.one_shot_cycle          = false;
 }
 
 void remove_player_textures(void)

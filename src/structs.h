@@ -10,6 +10,7 @@ typedef struct Entity Entity;
 typedef struct Animation Animation;
 typedef struct Timer Timer;
 typedef struct Tile Tile;
+typedef struct Tileset Tileset;
 typedef struct Player_Data Player_Data;
 typedef struct Enemy_Data Enemy_Data;
 typedef struct Bullet_Data Bullet_Data;
@@ -18,10 +19,11 @@ typedef union Object_Data Object_Data;
 typedef struct App
 {
     int                 keyboard[MAX_NUM_KEYS];
-    int                 S_W, S_H;
+    int                 S_W, S_H, G_W, G_H;
     float               delta_time;
     bool                show_gui_mode;
     Camera2D            camera;
+    int                 player_x;
 } App;
 
 struct Timer
@@ -66,6 +68,20 @@ union Object_Data
     Player_Data         player;
     Enemy_Data          enemy;
     Bullet_Data         bullet;
+};
+
+struct Tile
+{
+    Texture2D           texture;
+    Vector2             position;
+    Rectangle           collision_box;
+};
+
+struct Tileset
+{
+    Tile**              map;
+    Texture2D           tileset[TILESET_SIZE];
+    int                 rows, cols;
 };
 
 struct Entity

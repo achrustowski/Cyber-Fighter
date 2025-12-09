@@ -3,22 +3,35 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "map_one.tmx",
     "expandedProjectPaths": [
+        "."
     ],
     "fileStates": {
+        "map_one.tmx": {
+            "scale": 1.1078,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 491.96605885538906,
+                "y": 370.55425166997657
+            }
+        },
         "stage_one.tsx": {
             "dynamicWrapping": true,
-            "scaleInDock": 1,
+            "scaleInDock": 2.1541,
             "scaleInEditor": 1
         }
     },
     "last.imagePath": "/Users/work/Cyber-Fighter/data/Industrial Zone/1 Tiles",
+    "map.lastUsedFormat": "tmx",
     "openFiles": [
+        "map_one.tmx",
+        "stage_one.tsx"
     ],
     "project": "cyber-fighter.tiled-project",
     "recentFiles": [
-        "stage_one.tsx"
+        "stage_one.tsx",
+        "map_one.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.type": 1

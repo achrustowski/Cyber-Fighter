@@ -4,3 +4,4 @@
 -I/opt/homebrew/Cellar/sdl3_image/3.2.4/include
 -I/opt/homebrew/Cellar/sdl3_ttf/3.2.2/include
 -I/opt/homebrew/Cellar/cglm/0.9.6/include
+-I/opt/homebrew/Cellar/libxml2/2.13.8/include/libxml2

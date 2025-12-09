@@ -5,9 +5,11 @@
 
 #define FIGHTER_SCALE       2
 
-#define G_W                 30
-#define G_H                 20
 #define CELL_SIZE           48
+#define TILESET_SIZE        81
+
+#define ROWS                16
+#define COLS                210
 
 #define GRAVITY             400.0f
 #define VERTICAL_SPEED      200.0f

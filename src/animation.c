@@ -2,15 +2,6 @@
 #include "timer.h"
 #include "structs.h"
 
-Animation initialize_animation(Timer* timer, int frame_count, float length)
-{
-    Animation animation;
-    animation.frame_count = frame_count;
-    timer->length = length;
-
-    return animation;
-}
-
 float animation_get_length(Timer* timer)
 {
     return timer->length;
