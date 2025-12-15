@@ -1,4 +1,5 @@
 #include "draw.h"
+#include "defs.h"
 #include <raylib.h>
 
 Texture2D load_texture(char* filename, int scale)
@@ -13,7 +14,10 @@ Texture2D load_texture(char* filename, int scale)
 
 void blit_rect(Texture2D texture, Rectangle src_rect, Vector2 position, int dir)
 {
-    src_rect.width *= dir;
-
+    if (dir < 0)
+    {
+        src_rect.width *= dir;        // flip horizontally
+        position.x -= CELL_SIZE;
+    }
     DrawTextureRec(texture, src_rect, position, WHITE);
 }

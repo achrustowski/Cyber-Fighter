@@ -75,6 +75,7 @@ struct Tile
     Texture2D           texture;
     Vector2             position;
     Rectangle           collision_box;
+    bool                is_active;
 };
 
 struct Tileset

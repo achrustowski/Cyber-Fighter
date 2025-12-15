@@ -7,12 +7,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include "enums.h"
-#include <stdio.h>
+#include <stdbool.h>
 
 extern App app;
 extern Stage stage;
 
-static Entity* player;
+Entity* player;
 
 static Animation idle_animation;
 static Animation run_animation;
@@ -62,9 +62,9 @@ void init_player(void)
     player->grounded = true;
     player->position = (Vector2) {0.0f, 0.0f};
     player->velocity = (Vector2) {HORIZONTAL_SPEED, VERTICAL_SPEED};
+    player->src_rect = (Rectangle) {0.0f, 0.0f, CELL_SIZE * FIGHTER_SCALE, CELL_SIZE * FIGHTER_SCALE};
     player->speed = 0.0f;
     player->acceleration = (Vector2) {300.0f, 0.0f};
-    player->src_rect = (Rectangle) {0.0f, 0.0f, CELL_SIZE * FIGHTER_SCALE, CELL_SIZE * FIGHTER_SCALE};
     player->dir = RIGHT;
     player->rotate = 0;
     player->is_moving = false;
@@ -96,6 +96,7 @@ static void do_player_movement()
         }
     }
     app.player_x = player->position.x;
+    player->collision_box = (Rectangle) {player->position.x, player->position.y, CELL_SIZE, CELL_SIZE * FIGHTER_SCALE};
 }
 
 void do_player_logic(void)
@@ -202,29 +203,32 @@ static void do_player_key_input()
         player->grounded = false;
         player->speed = -player->velocity.y;
     }
-    if (IsKeyPressed(KEY_J) && player->data.player.attack_timer > 0)
+    if (player->data.player.attack_timer > 0 && player->grounded)
     {
-        player->data.player.attack_type = SIMPLE;
-        player->data.player.is_attacking = true;
-        --player->data.player.attack_timer;
-    }
-    if (IsKeyPressed(KEY_I) && player->data.player.attack_timer > 0)
-    {
-        player->data.player.attack_type = COMBO;
-        player->data.player.is_attacking = true;
-        --player->data.player.attack_timer;
-    }
-    if (IsKeyPressed(KEY_O) && player->data.player.attack_timer > 0)
-    {
-        player->data.player.attack_type = ULTRA;
-        player->data.player.is_attacking = true;
-        --player->data.player.attack_timer;
-    }
-    if (IsKeyPressed(KEY_K) && player->data.player.attack_timer > 0)
-    {
-        player->data.player.attack_type = KICK;
-        player->data.player.is_attacking = true;
-        --player->data.player.attack_timer;
+        if (IsKeyPressed(KEY_J))
+        {
+            player->data.player.attack_type = SIMPLE;
+            player->data.player.is_attacking = true;
+            --player->data.player.attack_timer;
+        }
+        if (IsKeyPressed(KEY_I))
+        {
+            player->data.player.attack_type = COMBO;
+            player->data.player.is_attacking = true;
+            --player->data.player.attack_timer;
+        }
+        if (IsKeyPressed(KEY_O))
+        {
+            player->data.player.attack_type = ULTRA;
+            player->data.player.is_attacking = true;
+            --player->data.player.attack_timer;
+        }
+        if (IsKeyPressed(KEY_K))
+        {
+            player->data.player.attack_type = KICK;
+            player->data.player.is_attacking = true;
+            --player->data.player.attack_timer;
+        }
     }
     if (IsKeyReleased(KEY_D) || IsKeyReleased(KEY_A))
     {

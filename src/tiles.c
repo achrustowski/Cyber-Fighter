@@ -10,7 +10,6 @@
 #include <dirent.h>
 
 extern App app;
-extern Entity player;
 
 Tileset ts;
 
@@ -35,7 +34,10 @@ void do_tilemap_logic()
             tile_x >= 0 && tile_x < COLS &&
             tile_y >= 0 && tile_y < ROWS)
     {
-        ts.map[tile_y][tile_x].texture = ts.tileset[selected_tile_index]; ts.map[tile_y][tile_x].position = (Vector2) {map_origin.x + tile_x * CELL_SIZE, map_origin.y + tile_y * CELL_SIZE};
+        ts.map[tile_y][tile_x].texture = ts.tileset[selected_tile_index];
+        ts.map[tile_y][tile_x].position = (Vector2) {map_origin.x + tile_x * CELL_SIZE, map_origin.y + tile_y * CELL_SIZE};
+        ts.map[tile_y][tile_x].collision_box = (Rectangle) {ts.map[tile_y][tile_x].position.x, ts.map[tile_y][tile_x].position.y, CELL_SIZE, CELL_SIZE};
+        ts.map[tile_y][tile_x].is_active = true;
     }
 }
 
@@ -47,6 +49,7 @@ void draw_tilemap()
         {
             Tile t = ts.map[y][x];
             DrawTexture(t.texture, t.position.x, t.position.y, WHITE);
+            t.collision_box = (Rectangle) {t.position.x, t.position.y, CELL_SIZE, CELL_SIZE};
         }
     }
 }
@@ -73,6 +76,7 @@ void init_tilemap()
         {
             ts.map[y][x].texture = (Texture2D) {0};
             ts.map[y][x].position = (Vector2) {0.0f, 0.0f};
+            ts.map[y][x].is_active = false;
         }
     }
 }
@@ -133,7 +137,6 @@ static void assign_tileset()
         memset(filename, 0, sizeof(filename));
         strcat(filename, directory);
     }
-    
 
     // Free sorted filenames
     for (int i = 0; i < count; i++)

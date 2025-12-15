@@ -79,6 +79,7 @@ static void draw_fighters()
     for (e = stage.fighter_head.next; e != NULL; e = e->next)
     {
         blit_rect(e->texture, e->src_rect, e->position, e->dir);
+        DrawRectangleLines(e->collision_box.x, e->collision_box.y, e->collision_box.width, e->collision_box.height, WHITE);
     }
 }
 
